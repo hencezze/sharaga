@@ -19,9 +19,7 @@ jobs:
           python-version: '3.10' # install the python version needed
           
       - name: Install dependencies 
-        run: | 
-            python3 -m pip install --upgrade pip 
-            pip3 install pylint 
+        run: python3 -m pip install --upgrade pip && pip3 install pylint 
   test:
     runs-on: [self-hosted, Linux]
     needs: [build]
