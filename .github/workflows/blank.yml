@@ -38,7 +38,7 @@ jobs:
         run: awk '{ print "<p>" $0 "</p>" }' linted.txt > index.html
         
       - name: executed output
-        run: python3 main.py | awk '{ print "<p>" $0 "</p>" }' >> index.html
+        run: python3 main.py ${{ github.event.head_commit.message }} | awk '{ print "<p>" $0 "</p>" }' >> index.html
         
       - name: executed output
         run: echo ${{ github.run_id }}
