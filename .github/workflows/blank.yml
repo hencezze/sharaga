@@ -1,40 +1,30 @@
-name: 
+name: run main.py
 
-on: 
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
 
-  push: 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content
 
-    branches: [ main ] 
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' # install the python version needed
 
- jobs: 
-
-  build: 
-
-    runs-on: ubuntu-latest 
-
-    steps: 
-
-    - uses: actions/checkout@v2 
-
-    - name: Set up Python 3.8 
-
-      uses: actions/setup-python@v2 
-
-      with: 
-
-        python-version: 3.8 
-
-    - name: Install dependencies 
-
-      run: | 
-
-        python -m pip install --upgrade pip 
-
-        pip install pylint 
-
-     - name: Lint with pylint 
-
-      run: | 
-
-
-        python lint.py 
+      - name: execute py script # run main.py
+        run: python lint.py
+        
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.2
+        with:
+    # Artifact name
+          name: python-script
+    # A file, directory or wildcard pattern that describes what to upload
+          path: lint.py
