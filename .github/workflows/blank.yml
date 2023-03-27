@@ -16,17 +16,17 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10' # install the python version needed
+          python-version: '3.11' # install the python version needed
           
       - name: Install dependencies 
-        run: python3 -m pip install --upgrade pip && pip3 install pylint 
+        run: python -m pip install --upgrade pip && pip install pylint 
   test:
     runs-on: [self-hosted, Linux]
     needs: [build]
     steps:
     
       - name: execute py script # run main.py
-        run: python3 lint.py >> linted.txt
+        run: python lint.py >> linted.txt
         
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
