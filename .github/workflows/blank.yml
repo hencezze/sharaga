@@ -56,12 +56,9 @@ jobs:
         run: docker run -itd -p 9927:8080 -n bluegreendp devimage:${{ github.run_id }}
       
       - name: docker new version simple test
-        run: if [[ $(curl -o /dev/null -s -w "%{http_code}\n" http://localhost:9927) -eq '201' ]]; then break; fi
+        run: if [[ $(curl -o /dev/null -s -w "%{http_code}\n" http://localhost:9927) -eq '201' ]]; then break; fi && docker rm -f bluegreendp
         
       - name: blue/green deploy finish
-        run: docker rm -f bluegreendp
-        
-      - name: 123
         run: docker rm -f prod && docker run -itd -p 8080:8080 -n prod devimage:${{ github.run_id }}
 
   notification:
