@@ -30,7 +30,7 @@ jobs:
           name: python-script
           path: linted.txt
           
-  deploy:
+  index:
     runs-on: [self-hosted, Linux]
     needs: [prerequisites]
     steps:
@@ -39,7 +39,7 @@ jobs:
           
   deploy:
     runs-on: [self-hosted, Linux]
-    needs: [prerequisites, build]
+    needs: [prerequisites, index]
     steps:
     
       - name: execute py script # run main.py
