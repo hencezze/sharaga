@@ -8,10 +8,10 @@ jobs:
   prerequisites:
     runs-on: [self-hosted, Linux]
     steps:
-      - name: checkout repo
+      - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: setup python
+      - name: Setup python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11' # install the python version needed
@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies 
         run: pip3 install pylint 
         
-      - name: execute lint script
+      - name: Execute lint script
         run: python3 lint.py >> linted.txt
         
       - name: Upload a Build Artifact
@@ -32,10 +32,10 @@ jobs:
     runs-on: [self-hosted, Linux]
     needs: [prerequisites]
     steps:
-      - name: add lint info
+      - name: Add lint info
         run: awk '{ print "<p>" $0 "</p>" }' linted.txt > index.html
         
-      - name: execing main.py
+      - name: Execing main.py
         run: echo ${{ github.event.head_commit.message }} | python3 main.py | awk '{ print "<p>" $0 "</p>" }' >> index.html
              
   deploy:
@@ -43,16 +43,16 @@ jobs:
     needs: [prerequisites, build]
     steps:
     
-      - name: docker build
+      - name: Docker build
         run: docker build -t devimage:${{ github.run_id }} .
         
-      - name: blue/green deploy
+      - name: Blue/green deploy
         run: docker run -itd -p 9927:8080 --name bluegreendp devimage:${{ github.run_id }}
       
-      - name: docker new version simple test
+      - name: Docker new version simple test
         run: if [[ $(curl -o /dev/null -s -w "%{http_code}\n" http://localhost:9927) -eq '201' ]]; then break; fi && docker rm -f bluegreendp
         
-      - name: blue/green deploy finish
+      - name: Blue/green deploy finish
         run: docker rm -f prod && docker run -itd -p 8080:8080 --name prod devimage:${{ github.run_id }}
 
   notification:
@@ -65,6 +65,6 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |  #https://help.github.com/en/actions/reference/contexts-and-expression-syntax-for-github-actions#github-context
-            Build ${{ github.run_id }} succesfully deployed. Image name devimage:${{ github.run_id }}
+            Build ${{ github.run_id }} succesfully deployed. Image name devimage:${{ github.run_id }}. Python env is: ${{ github.event.head_commit.message }}
             Author:"${{ github.actor }}" triggered by ${{ github.event_name }} in ${{ github.repository }}
         
