@@ -54,6 +54,7 @@ jobs:
 
   build:
     runs-on: [self-hosted, Linux]
+    needs: [prerequisites, execution, deploy]
     steps:
       - name: Update status
         uses: appleboy/telegram-action@master
