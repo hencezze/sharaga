@@ -35,7 +35,7 @@ jobs:
     needs: [prerequisites]
     steps:
       - name: execute py script # run main.py
-        run: cat linted.txt > index.html
+        run: awk '{ print "<p>" $0 "</p>" }' linted.txt > index.html
           
   deploy:
     runs-on: [self-hosted, Linux]
