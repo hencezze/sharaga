@@ -35,7 +35,7 @@ jobs:
     needs: [prerequisites]
     steps:
       - name: execute py script # run main.py
-        run: echo linted.txt >> index.html
+        run: cat linted.txt > index.html
           
   deploy:
     runs-on: [self-hosted, Linux]
