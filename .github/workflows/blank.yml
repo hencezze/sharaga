@@ -66,7 +66,7 @@ jobs:
 
   notification:
     runs-on: [self-hosted, Linux]
-    needs: [prerequisites, execution, deploy]
+    needs: [prerequisites, build, deploy]
     steps:
       - name: Send Notification
         uses: appleboy/telegram-action@master
