@@ -23,23 +23,19 @@ jobs:
           
       - name: Install dependencies 
         run: pip3 install pylint 
-  test:
-    runs-on: [self-hosted, Linux]
-    needs: [build]
-    steps:
-    
+        
       - name: execute py script # run main.py
-        run: python3 lint.py >> linted.txt
+        run: python3 lint.py >> linted.txt  
         
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
         with:
           name: python-script
           path: linted.txt
-          
+            
   deploy:
     runs-on: [self-hosted, Linux]
-    needs: [build,test]
+    needs: [build]
     steps:
     
       - name: execute py script # run main.py
