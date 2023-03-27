@@ -19,14 +19,14 @@ jobs:
           python-version: '3.11' # install the python version needed
           
       - name: Install dependencies 
-        run: python -m pip install --upgrade pip && pip install pylint 
+        run: python3 -m pip install --upgrade pip && pip3 install pylint 
   test:
     runs-on: [self-hosted, Linux]
     needs: [build]
     steps:
     
       - name: execute py script # run main.py
-        run: python lint.py >> linted.txt
+        run: python3 lint.py >> linted.txt
         
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
