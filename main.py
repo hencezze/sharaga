@@ -10,6 +10,6 @@ found = re.match(PATTERN, sys.argv[0])
 
 # Print message based on the return value
 if found:
-    print("The input value is started with the capital letter")
+    print("DA")
 else:
-    print("You have to type string start with the capital letter")
+    print("NET")
