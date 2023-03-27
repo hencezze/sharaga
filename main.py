@@ -1,4 +1,3 @@
-# Import re module
 import re
 import sys
 
