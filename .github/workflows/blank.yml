@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies 
         run: pip3 install pylint 
         
-      - name: execute py script # run main.py
+      - name: execute lint script
         run: python3 lint.py >> linted.txt
         
       - name: Upload a Build Artifact
@@ -48,19 +48,20 @@ jobs:
     needs: [prerequisites, execution]
     steps:
     
-      - name: execute py script # run main.py
+      - name: docker build
         run: docker ps
         
 
-  build:
+  notification:
     runs-on: [self-hosted, Linux]
     needs: [prerequisites, execution, deploy]
     steps:
-      - name: Update status
+      - name: Send Notification
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |  #https://help.github.com/en/actions/reference/contexts-and-expression-syntax-for-github-actions#github-context
-            Короче "${{ github.actor }}" сделал ${{ github.event_name }} в ${{ github.repository }}, билд пошел-поехал ну и все заебись, слава богу, что деплоимся не в пятницу вечером
+            Build on 
+            Author:"${{ github.actor }}" triggered by ${{ github.event_name }} in ${{ github.repository }}
         
