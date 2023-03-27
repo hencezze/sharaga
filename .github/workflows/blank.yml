@@ -1,4 +1,4 @@
-name: run main.py
+name: CI/CD
 
 # Controls when the workflow will run
 on:
@@ -28,7 +28,7 @@ jobs:
     steps:
     
       - name: execute py script # run main.py
-        run: python lint.py >> linted.txt
+        run: python3 lint.py >> linted.txt
         
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
