@@ -10,24 +10,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout repo content
-        uses: actions/checkout@v2 # checkout the repository content
-
-      - name: setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10' # install the python version needed
-          
-      - name: Security vulnerabilities scan
-        uses: aufdenpunkt/python-safety-check@master
-
-      - name: execute py script # run main.py
-        run: python main.py
-        
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.1.2
-        with:
-    # Artifact name
-          name: python-script
-    # A file, directory or wildcard pattern that describes what to upload
-          path: main.py
+    - uses: actions/checkout@v2
+    - uses: weibullguy/python-lint-plus@v1.11.0
+      with:
+        python-root-list: "tests"
+        virtual-env: "python-lint-plus"
+        use-docformatter: true
+        docformatter-version: "==1.5.0"
+        use-isort: true 
+        use-pydocstyle: true
+        pydocstyle-version: ">=6.1.0"
