@@ -1,4 +1,4 @@
-name: CI/CD p
+name: CI/CD pi
 
 # Controls when the workflow will run
 on:
