@@ -35,6 +35,9 @@ jobs:
         with:
           path: /home/nix/actions-runner/_work/_tool/Python/3.11.2/x64/lib/python3.11/site-packages  # See the note below
           key: pip  # Must be the same key you specified in the first job
+          
+      - name: execute py script # run main.py
+        run: ls
 
       - name: execute py script # run main.py
         run: python3 lint.py >> linted.txt
