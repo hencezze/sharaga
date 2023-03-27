@@ -30,7 +30,7 @@ jobs:
           name: python-script
           path: linted.txt
           
-  execution:
+  build:
     runs-on: [self-hosted, Linux]
     needs: [prerequisites]
     steps:
@@ -38,7 +38,8 @@ jobs:
         run: awk '{ print "<p>" $0 "</p>" }' linted.txt > index.html
         
       - name: executed output
-        run: awk '{ print "<p>" $0 "</p>" }' linted.txt > index.html
+        run: python3 main.py | awk '{ print "<p>" $0 "</p>" }' >> index.html
+        
       - name: executed output
         run: echo ${{ github.run_id }}
         
@@ -49,8 +50,19 @@ jobs:
     steps:
     
       - name: docker build
-        run: docker ps
+        run: docker build -t devimage:${{ github.run_id }} .
         
+      - name: blue/green deploy
+        run: docker run -itd -p 9927:8080 -n bluegreendp devimage:${{ github.run_id }}
+      
+      - name: docker new version simple test
+        run: if [[ $(curl -o /dev/null -s -w "%{http_code}\n" http://localhost:9927) -eq '201' ]]; then break; fi
+        
+      - name: blue/green deploy finish
+        run: docker rm -f bluegreendp
+        
+      - name: 123
+        run: docker rm -f prod && docker run -itd -p 8080:8080 -n prod devimage:${{ github.run_id }}
 
   notification:
     runs-on: [self-hosted, Linux]
