@@ -4,10 +4,10 @@ import re
 # Take any string data
 string = input("Enter a string value: ")
 # Define the searching pattern
-pattern = '^[A-Z]'
+PATTERN = '^[A-Z]'
 
 # match the pattern with input value
-found = re.match(pattern, string)
+found = re.match(PATTERN, string)
 
 # Print message based on the return value
 if found:
