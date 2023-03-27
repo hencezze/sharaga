@@ -20,15 +20,25 @@ jobs:
           
       - name: Install dependencies 
         run: pwd   
-          
+          ../../_tool/Python/3.11.2/x64/lib/python3.11/site-packages
       - name: Install dependencies 
         run: pip3 install pylint 
+        
+      - uses: actions/cache@v3
+        with:
+          path: ../../_tool/Python/3.11.2/x64/lib/python3.11/site-packages  # Note that this path is not influenced by working-directory set in defaults, for example
+          key: pip
         
   test:
     runs-on: [self-hosted, Linux]
     needs: [build]
     steps:
     
+      - uses: actions/cache@v3
+        with:
+          path: ../../_tool/Python/3.11.2/x64/lib/python3.11/site-packages  # See the note below
+          key: pip  # Must be the same key you specified in the first job
+
       - name: execute py script # run main.py
         run: python3 lint.py >> linted.txt
         
