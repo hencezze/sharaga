@@ -18,6 +18,9 @@ jobs:
         with:
           python-version: '3.11' # install the python version needed
           
+      - name: Install dependencies test
+        run: pip3 uninstall pylint -y
+          
       - name: Install dependencies 
         run: pip3 install pylint 
   test:
