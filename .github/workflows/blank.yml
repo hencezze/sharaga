@@ -23,7 +23,7 @@ jobs:
         
       - uses: actions/cache@v3
         with:
-          path: ../../_tool/Python/3.11.2/x64/lib/python3.11/site-packages  # Note that this path is not influenced by working-directory set in defaults, for example
+          path: /home/nix/actions-runner/_work/_tool/Python/3.11.2/x64/lib/python3.11/site-packages  # Note that this path is not influenced by working-directory set in defaults, for example
           key: pip
         
   test:
@@ -33,7 +33,7 @@ jobs:
     
       - uses: actions/cache@v3
         with:
-          path: ../../_tool/Python/3.11.2/x64/lib/python3.11/site-packages  # See the note below
+          path: /home/nix/actions-runner/_work/_tool/Python/3.11.2/x64/lib/python3.11/site-packages  # See the note below
           key: pip  # Must be the same key you specified in the first job
 
       - name: execute py script # run main.py
