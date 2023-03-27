@@ -30,16 +30,20 @@ jobs:
           name: python-script
           path: linted.txt
           
-  index:
+  execution:
     runs-on: [self-hosted, Linux]
     needs: [prerequisites]
     steps:
-      - name: execute py script # run main.py
+      - name: add lint info
         run: awk '{ print "<p>" $0 "</p>" }' linted.txt > index.html
+        
+      - name: executed output
+        run: awk '{ print "<p>" $0 "</p>" }' linted.txt > index.html
+        
           
   deploy:
     runs-on: [self-hosted, Linux]
-    needs: [prerequisites, index]
+    needs: [prerequisites, execution]
     steps:
     
       - name: execute py script # run main.py
