@@ -39,6 +39,8 @@ jobs:
         
       - name: executed output
         run: awk '{ print "<p>" $0 "</p>" }' linted.txt > index.html
+      - name: executed output
+        run: echo ${{ github.run_id }}
         
           
   deploy:
