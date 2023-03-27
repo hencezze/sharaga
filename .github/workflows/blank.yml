@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  prerequisites:
     runs-on: [self-hosted, Linux]
     steps:
       - name: checkout repo content
@@ -32,7 +32,12 @@ jobs:
           
   deploy:
     runs-on: [self-hosted, Linux]
-    needs: [build]
+    needs: [prerequisites]
+    steps:
+          
+  deploy:
+    runs-on: [self-hosted, Linux]
+    needs: [prerequisites, build]
     steps:
     
       - name: execute py script # run main.py
