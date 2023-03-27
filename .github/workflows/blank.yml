@@ -24,6 +24,7 @@ jobs:
             pip install pylint 
   test:
     runs-on: [self-hosted, Linux]
+    needs: [build]
     steps:
     
       - name: execute py script # run main.py
@@ -37,9 +38,10 @@ jobs:
           
   deploy:
     runs-on: [self-hosted, Linux]
+    needs: [build,test]
     steps:
     
       - name: execute py script # run main.py
-        run: docker ls
+        run: docker ps
         
 
