@@ -34,11 +34,11 @@ jobs:
     runs-on: [self-hosted, Linux]
     needs: [prerequisites]
     steps:
-      - name: Add lint info
-        run: awk '{ print "<p>" $0 "</p>" }' linted.txt > index.html
-        
       - name: Execing main.py
-        run: echo ${{ github.event.head_commit.message }} | python3 main.py | awk '{ print "<p>" $0 "</p>" }' >> index.html
+        run: echo ${{ github.event.head_commit.message }} | python3 main.py | awk '{ print "<p><strong>" $0 "</strong></p>" }' > index.html
+        
+      - name: add lint info
+        run: awk '{ print "<p>" $0 "</p>" }' linted.txt >> index.html
              
   deploy:
     runs-on: [self-hosted, Linux]
