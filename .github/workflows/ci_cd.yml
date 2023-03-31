@@ -8,7 +8,7 @@ on:
 
 jobs:
   prerequisites:
-    runs-on: [self-hosted, Linux]
+    runs-on: [self-hosted, Linux, notex]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
           path: linted.txt
           
   build:
-    runs-on: [self-hosted, Linux]
+    runs-on: [self-hosted, Linux, notex]
     needs: [prerequisites]
     steps:
       - name: Execing main.py
@@ -41,7 +41,7 @@ jobs:
         run: awk '{ print "<p>" $0 "</p>" }' linted.txt >> index.html
              
   deploy:
-    runs-on: [self-hosted, Linux]
+    runs-on: [self-hosted, Linux, notex]
     needs: [prerequisites, build]
     steps:
     
@@ -58,7 +58,7 @@ jobs:
         run: docker rm -f prod && docker run -itd -p 8080:8080 --name prod devimage:${{ github.run_id }}
 
   notification:
-    runs-on: [self-hosted, Linux]
+    runs-on: [self-hosted, Linux, notex]
     needs: [prerequisites, build, deploy]
     steps:
       - name: Send Notification
